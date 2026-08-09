@@ -1,6 +1,6 @@
 import java.util.Objects;
 
-public class Visitor {
+public class Visitor implements Comparable<Visitor> {
     private int visitorID;
     private String name;
     private int age;
@@ -54,6 +54,16 @@ public class Visitor {
 
     public String getTicketType() {
         return ticketType;
+    }
+    @Override
+    public int compareTo(Visitor other) {
+        if (this.age < other.age) {
+            return -1;
+        } else if (this.age > other.age) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
 
     @Override
