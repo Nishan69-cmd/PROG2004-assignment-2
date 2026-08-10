@@ -5,8 +5,6 @@ public class AssignmentTwo {
 
     public static void main(String[] args) {
 
-        // Part 1 - Modelling the park's people
-
         Visitor visitor1 = new Visitor(201, "Sam", 25, "Adult");
         Visitor visitor2 = new Visitor(202, "Alex", 18, "Adult");
         Visitor visitor3 = new Visitor(203, "Mia", 30, "Adult");
@@ -32,5 +30,22 @@ public class AssignmentTwo {
             System.out.println(visitor);
             System.out.println();
         }
+
+    Staff staff1 = new Staff(
+            101,
+            "John Smith",
+            30,
+            "Ride Operator");
+
+    Ride ride1 = new Ride(301, "Roller Coaster");
+
+    System.out.println(ride1.getAttractionID());
+    System.out.println(ride1.getName());
+
+    ride1.assignOperator(staff1);
+
+    System.out.println(ride1.getOperator());
+
+    ride1.removeOperator();
     }
 }
