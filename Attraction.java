@@ -35,4 +35,26 @@ public abstract class Attraction {
     public Staff getOperator() {
         return operator;
     }
+    public void assignOperator(Staff operator) {
+
+    Objects.requireNonNull(operator, "Operator must not be null");
+
+    this.operator = operator;
+
+    System.out.println(operator.getName()
+            + " assigned to " + name);
+    }
+
+    public void removeOperator() {
+
+        if (operator == null) {
+            System.out.println("No operator assigned to " + name);
+        } else {
+            System.out.println(operator.getName()
+                    + " removed from " + name);
+
+            operator = null;
+        }
+    }
 }
+
