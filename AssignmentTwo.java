@@ -31,21 +31,37 @@ public class AssignmentTwo {
             System.out.println();
         }
 
-    Staff staff1 = new Staff(
+     Staff staff1 = new Staff(
             101,
             "John Smith",
             30,
             "Ride Operator");
 
-    Ride ride1 = new Ride(301, "Roller Coaster");
+        Ride ride1 = new Ride(301, "Roller Coaster");
 
-    System.out.println(ride1.getAttractionID());
-    System.out.println(ride1.getName());
+        System.out.println(ride1.getAttractionID());
+        System.out.println(ride1.getName());
 
-    ride1.assignOperator(staff1);
+        ride1.assignOperator(staff1);
 
-    System.out.println(ride1.getOperator());
+        System.out.println(ride1.getOperator());
 
-    ride1.removeOperator();
+        ride1.removeOperator();
+        Show show1 = new Show(401, "Magic Show");
+
+System.out.println(show1.getAttractionID());
+System.out.println(show1.getName());
+
+show1.assignOperator(staff1);
+show1.removeOperator();
+ride1.inspect("Passed");
+
+System.out.println(
+        "Inspection result: "
+                + ride1.getInspectionResult());
+
+System.out.println(
+        "Ride closed: "
+                + ride1.isClosed());
     }
 }
