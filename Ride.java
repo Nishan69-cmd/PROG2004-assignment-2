@@ -5,6 +5,7 @@ public class Ride extends Attraction implements Inspectable {
 
     public Ride(int attractionID, String name) {
         super(attractionID, name);
+
         this.closed = false;
         this.inspectionResult = "Not inspected yet";
     }
@@ -17,12 +18,16 @@ public class Ride extends Attraction implements Inspectable {
         System.out.println(getName()
                 + " is closed for inspection.");
 
+        System.out.println("Closed: " + closed);
+
         inspectionResult = result;
 
         closed = false;
 
         System.out.println(getName()
                 + " inspection completed.");
+
+        System.out.println("Closed: " + closed);
     }
 
     @Override

@@ -14,7 +14,8 @@ public class Toilet implements Inspectable {
                     "Toilet ID must be greater than 0");
         }
 
-        Objects.requireNonNull(location,
+        Objects.requireNonNull(
+                location,
                 "Location must not be null");
 
         if (location.isBlank()) {
@@ -45,6 +46,8 @@ public class Toilet implements Inspectable {
                 + location
                 + " is closed for inspection.");
 
+        System.out.println("Closed: " + closed);
+
         inspectionResult = result;
 
         closed = false;
@@ -52,6 +55,8 @@ public class Toilet implements Inspectable {
         System.out.println("Toilet at "
                 + location
                 + " inspection completed.");
+
+        System.out.println("Closed: " + closed);
     }
 
     @Override

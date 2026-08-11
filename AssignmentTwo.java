@@ -49,19 +49,38 @@ public class AssignmentTwo {
         ride1.removeOperator();
         Show show1 = new Show(401, "Magic Show");
 
-System.out.println(show1.getAttractionID());
-System.out.println(show1.getName());
+    System.out.println(show1.getAttractionID());
+    System.out.println(show1.getName());
 
-show1.assignOperator(staff1);
-show1.removeOperator();
-ride1.inspect("Passed");
+    show1.assignOperator(staff1);
+    show1.removeOperator();
+    ride1.inspect("Passed");
 
-System.out.println(
-        "Inspection result: "
-                + ride1.getInspectionResult());
+    System.out.println(
+            "Inspection result: "
+                    + ride1.getInspectionResult());
 
-System.out.println(
-        "Ride closed: "
-                + ride1.isClosed());
+    System.out.println(
+            "Ride closed: "
+                    + ride1.isClosed());
+                    Toilet toilet1 = new Toilet(501, "Food Court");
+
+    toilet1.inspect("Clean");
+
+    System.out.println(
+            "Inspection result: "
+                    + toilet1.getInspectionResult());
+
+    System.out.println(
+            "Toilet closed: "
+                    + toilet1.isClosed());
+                    staff1.performInspection(ride1, "Passed");
+
+    System.out.println("Ride result: "
+            + ride1.getInspectionResult());
+            staff1.performInspection(toilet1, "Clean");
+
+    System.out.println("Toilet result: "
+            + toilet1.getInspectionResult());
     }
 }
