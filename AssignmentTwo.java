@@ -82,5 +82,40 @@ public class AssignmentTwo {
 
     System.out.println("Toilet result: "
             + toilet1.getInspectionResult());
+            ride1.addVisitorToQueue(visitor1);
+    
+    System.out.println();
+    System.out.println("PART 3 - WAITING LINE");
+
+    ride1.addVisitorToQueue(visitor1);
+    ride1.addVisitorToQueue(visitor2);
+    ride1.addVisitorToQueue(visitor3);
+    
+    System.out.println();
+    System.out.println(" WAITING LINE");
+
+    ride1.addVisitorToQueue(visitor1);
+    ride1.addVisitorToQueue(visitor2);
+    ride1.addVisitorToQueue(visitor3);
+
+    Visitor nextVisitor = ride1.removeNextVisitor();
+
+    System.out.println("Next visitor: "
+            + nextVisitor.getName());
+
+    System.out.println();
+    ride1.displayWaitingLine();
+
+    System.out.println();
+    System.out.println("REMOVING REMAINING VISITORS");
+
+    ride1.removeNextVisitor();
+    ride1.removeNextVisitor();
+
+    System.out.println();
+    ride1.displayWaitingLine();
+
+    System.out.println();
+    ride1.removeNextVisitor();
     }
 }
