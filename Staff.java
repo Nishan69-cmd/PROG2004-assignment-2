@@ -33,7 +33,14 @@ public class Staff {
     this.age = age;
     this.role = role;
     }
-   
+   public void performInspection(Inspectable item, String result) {
+
+    Objects.requireNonNull(item,
+            "Inspectable item must not be null");
+
+    item.inspect(result);
+    }
+    
     public int getStaffID() {
     return staffID;
     }
