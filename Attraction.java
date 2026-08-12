@@ -1,14 +1,16 @@
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Objects;
 import java.util.Queue;
-
 public abstract class Attraction {
 
     private int attractionID;
     private String name;
     private Staff operator;
     private Queue<Visitor> waitingLine;
+    private ArrayList<Visitor> visitHistory;
 
   public Attraction(int attractionID, String name) {
 
@@ -28,6 +30,8 @@ public abstract class Attraction {
     this.name = name;
     this.operator = null;
     this.waitingLine = new LinkedList<>();
+    this.visitHistory = new ArrayList<>();
+
     }
     public int getAttractionID() {
     return attractionID;
@@ -69,21 +73,74 @@ public abstract class Attraction {
     }
     public void displayWaitingLine() {
 
-    System.out.println("Waiting line for " + name);
+        System.out.println("Waiting line for " + name);
 
-    if (waitingLine.isEmpty()) {
-        System.out.println("No visitors waiting.");
-    } else {
+        if (waitingLine.isEmpty()) {
+            System.out.println("No visitors waiting.");
+        } 
+        else {
 
-        Iterator<Visitor> iterator = waitingLine.iterator();
+            Iterator<Visitor> iterator = waitingLine.iterator();
 
-        while (iterator.hasNext()) {
-            Visitor visitor = iterator.next();
+            while (iterator.hasNext()) {
+                Visitor visitor = iterator.next();
 
+                System.out.println(visitor);
+                System.out.println();
+            }
+        }
+    }
+    public void recordVisit(Visitor visitor) {
+
+        Objects.requireNonNull(
+                visitor,
+                "Visitor must not be null");
+
+        visitHistory.add(visitor);
+
+        System.out.println(visitor.getName()
+                + " added to visit history for "
+                + name);
+    }
+    public void displayVisitHistory() {
+
+        System.out.println("Visit history for " + name);
+
+        if (visitHistory.isEmpty()) {
+            System.out.println("No visitors in history.");
+        } else {
+
+            Iterator<Visitor> iterator = visitHistory.iterator();
+
+            while (iterator.hasNext()) {
+                Visitor visitor = iterator.next();
+
+                System.out.println(visitor);
+                System.out.println();
+            }
+        }
+    }
+    public int getVisitCount() {
+    return visitHistory.size();
+    }
+
+    public boolean hasVisited(Visitor visitor) {
+        return visitHistory.contains(visitor);
+    }
+    public void displayHistoryByAge() {
+
+        ArrayList<Visitor> sortedHistory = new ArrayList<>();
+
+        sortedHistory.addAll(visitHistory);
+
+        Collections.sort(sortedHistory);
+
+        System.out.println("Visit history sorted by age for " + name);
+
+        for (Visitor visitor : sortedHistory) {
             System.out.println(visitor);
             System.out.println();
         }
-    }
     }
     public void assignOperator(Staff operator) {
 
