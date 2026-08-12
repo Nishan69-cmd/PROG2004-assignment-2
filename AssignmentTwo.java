@@ -50,12 +50,14 @@ public class AssignmentTwo {
                 30,
                 "Ride Operator");
 
-        Ride ride1 =
-                new Ride(301, "Roller Coaster");
-
-        Show show1 =
-                new Show(401, "Magic Show");
-
+        Ride ride1 = new Ride(
+                301,
+                "Roller Coaster",
+                2);
+        Show show1 = new Show(
+                401,
+                "Magic Show",
+                3);
         Toilet toilet1 =
                 new Toilet(501, "Food Court");
 
@@ -142,5 +144,10 @@ public class AssignmentTwo {
 
         System.out.println();
         ride1.displayHistoryByNameAndTicket();
+        System.out.println("Ride capacity: "
+        + ride1.getCapacity());
+
+        System.out.println("Ride cycles: "
+                + ride1.getCycleCount());
     }
 }

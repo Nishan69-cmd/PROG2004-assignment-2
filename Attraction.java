@@ -11,8 +11,10 @@ public abstract class Attraction {
     private Staff operator;
     private Queue<Visitor> waitingLine;
     private ArrayList<Visitor> visitHistory;
+    private int capacity;
+    private int cycleCount;
 
-  public Attraction(int attractionID, String name) {
+  public Attraction(int attractionID, String name, int capacity){
 
     if (attractionID <= 0) {
         throw new IllegalArgumentException(
@@ -25,13 +27,18 @@ public abstract class Attraction {
         throw new IllegalArgumentException(
                 "Name must not be blank");
     }
+    if (capacity <= 0) {
+    throw new IllegalArgumentException(
+            "Capacity must be greater than 0");
+    }   
 
     this.attractionID = attractionID;
     this.name = name;
     this.operator = null;
     this.waitingLine = new LinkedList<>();
     this.visitHistory = new ArrayList<>();
-
+    this.capacity = capacity;
+    this.cycleCount = 0;
     }
     public int getAttractionID() {
     return attractionID;
@@ -44,6 +51,14 @@ public abstract class Attraction {
     public Staff getOperator() {
         return operator;
     }
+
+    public int getCapacity() {
+    return capacity;
+}
+
+public int getCycleCount() {
+    return cycleCount;
+}
     public void addVisitorToQueue(Visitor visitor) {
 
     Objects.requireNonNull(
