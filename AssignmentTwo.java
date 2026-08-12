@@ -5,9 +5,18 @@ public class AssignmentTwo {
 
     public static void main(String[] args) {
 
-        Visitor visitor1 = new Visitor(201, "Sam", 25, "Adult");
-        Visitor visitor2 = new Visitor(202, "Alex", 18, "Adult");
-        Visitor visitor3 = new Visitor(203, "Mia", 30, "Adult");
+
+        Visitor visitor1 =
+                new Visitor(201, "Sam", 25, "Adult");
+
+        Visitor visitor2 =
+                new Visitor(202, "Alex", 18, "Adult");
+
+        Visitor visitor3 =
+                new Visitor(203, "Mia", 30, "Adult");
+
+        Visitor visitor4 =
+                new Visitor(204, "Sam", 22, "VIP");
 
         ArrayList<Visitor> visitors = new ArrayList<>();
 
@@ -31,91 +40,107 @@ public class AssignmentTwo {
             System.out.println();
         }
 
-     Staff staff1 = new Staff(
-            101,
-            "John Smith",
-            30,
-            "Ride Operator");
 
-        Ride ride1 = new Ride(301, "Roller Coaster");
+        System.out.println();
+        System.out.println("ATTRACTIONS");
+
+        Staff staff1 = new Staff(
+                101,
+                "John Smith",
+                30,
+                "Ride Operator");
+
+        Ride ride1 =
+                new Ride(301, "Roller Coaster");
+
+        Show show1 =
+                new Show(401, "Magic Show");
+
+        Toilet toilet1 =
+                new Toilet(501, "Food Court");
 
         System.out.println(ride1.getAttractionID());
         System.out.println(ride1.getName());
 
         ride1.assignOperator(staff1);
-
-        System.out.println(ride1.getOperator());
-
         ride1.removeOperator();
-        Show show1 = new Show(401, "Magic Show");
 
-    System.out.println(show1.getAttractionID());
-    System.out.println(show1.getName());
+        show1.assignOperator(staff1);
+        show1.removeOperator();
 
-    show1.assignOperator(staff1);
-    show1.removeOperator();
-    ride1.inspect("Passed");
+        staff1.performInspection(ride1, "Passed");
 
-    System.out.println(
-            "Inspection result: "
-                    + ride1.getInspectionResult());
+        System.out.println(
+                "Ride result: "
+                        + ride1.getInspectionResult());
 
-    System.out.println(
-            "Ride closed: "
-                    + ride1.isClosed());
-                    Toilet toilet1 = new Toilet(501, "Food Court");
+        staff1.performInspection(toilet1, "Clean");
 
-    toilet1.inspect("Clean");
+        System.out.println(
+                "Toilet result: "
+                        + toilet1.getInspectionResult());
 
-    System.out.println(
-            "Inspection result: "
-                    + toilet1.getInspectionResult());
 
-    System.out.println(
-            "Toilet closed: "
-                    + toilet1.isClosed());
-                    staff1.performInspection(ride1, "Passed");
+        System.out.println();
+        System.out.println(" WAITING LINE");
 
-    System.out.println("Ride result: "
-            + ride1.getInspectionResult());
-            staff1.performInspection(toilet1, "Clean");
+        ride1.addVisitorToQueue(visitor1);
+        ride1.addVisitorToQueue(visitor2);
+        ride1.addVisitorToQueue(visitor3);
 
-    System.out.println("Toilet result: "
-            + toilet1.getInspectionResult());
-            ride1.addVisitorToQueue(visitor1);
-    
-    System.out.println();
-    System.out.println("PART 3 - WAITING LINE");
+        System.out.println();
+        ride1.displayWaitingLine();
 
-    ride1.addVisitorToQueue(visitor1);
-    ride1.addVisitorToQueue(visitor2);
-    ride1.addVisitorToQueue(visitor3);
-    
-    System.out.println();
-    System.out.println(" WAITING LINE");
+        Visitor nextVisitor =
+                ride1.removeNextVisitor();
 
-    ride1.addVisitorToQueue(visitor1);
-    ride1.addVisitorToQueue(visitor2);
-    ride1.addVisitorToQueue(visitor3);
+        System.out.println(
+                "Next visitor: "
+                        + nextVisitor.getName());
 
-    Visitor nextVisitor = ride1.removeNextVisitor();
+        System.out.println();
+        ride1.displayWaitingLine();
 
-    System.out.println("Next visitor: "
-            + nextVisitor.getName());
+        System.out.println();
+        System.out.println(
+                "REMOVING REMAINING VISITORS");
 
-    System.out.println();
-    ride1.displayWaitingLine();
+        ride1.removeNextVisitor();
+        ride1.removeNextVisitor();
 
-    System.out.println();
-    System.out.println("REMOVING REMAINING VISITORS");
+        System.out.println();
+        ride1.displayWaitingLine();
 
-    ride1.removeNextVisitor();
-    ride1.removeNextVisitor();
+        System.out.println();
+        ride1.removeNextVisitor();
 
-    System.out.println();
-    ride1.displayWaitingLine();
+        System.out.println();
+        System.out.println("VISIT HISTORY");
 
-    System.out.println();
-    ride1.removeNextVisitor();
+        ride1.recordVisit(visitor1);
+        ride1.recordVisit(visitor2);
+        ride1.recordVisit(visitor1);
+        ride1.recordVisit(visitor4);
+
+        System.out.println();
+        ride1.displayVisitHistory();
+
+        System.out.println(
+                "Total visits: "
+                        + ride1.getVisitCount());
+
+        System.out.println(
+                "Has Sam visited: "
+                        + ride1.hasVisited(visitor1));
+
+        System.out.println(
+                "Has Mia visited: "
+                        + ride1.hasVisited(visitor3));
+
+        System.out.println();
+        ride1.displayHistoryByAge();
+
+        System.out.println();
+        ride1.displayHistoryByNameAndTicket();
     }
 }

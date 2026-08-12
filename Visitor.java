@@ -65,7 +65,26 @@ public class Visitor implements Comparable<Visitor> {
             return 0;
         }
     }
+    @Override
+    public boolean equals(Object obj) {
 
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+
+        Visitor visitor = (Visitor) obj;
+
+        return visitorID == visitor.visitorID;
+        }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(visitorID);
+    }
     @Override
     public String toString() {
         return "Visitor ID: " + visitorID

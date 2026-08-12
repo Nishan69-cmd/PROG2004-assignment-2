@@ -142,6 +142,25 @@ public abstract class Attraction {
             System.out.println();
         }
     }
+    public void displayHistoryByNameAndTicket() {
+
+    ArrayList<Visitor> sortedHistory = new ArrayList<>();
+
+    sortedHistory.addAll(visitHistory);
+
+    Collections.sort(
+            sortedHistory,
+            new VisitorNameTicketComparator());
+
+    System.out.println(
+            "Visit history sorted by name and ticket type for "
+                    + name);
+
+    for (Visitor visitor : sortedHistory) {
+        System.out.println(visitor);
+        System.out.println();
+    }
+    }
     public void assignOperator(Staff operator) {
 
     Objects.requireNonNull(operator, "Operator must not be null");
