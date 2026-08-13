@@ -1,6 +1,8 @@
 public interface Inspectable {
 
-    void inspect(String result);
+    void startInspection();
+
+    void finishInspection(String result);
 
     boolean isClosed();
 

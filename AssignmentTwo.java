@@ -149,5 +149,67 @@ public class AssignmentTwo {
 
         System.out.println("Ride cycles: "
                 + ride1.getCycleCount());
+
+        System.out.println();
+        System.out.println("OPERATING ATTRACTIONS");
+
+        Ride ride2 = new Ride(
+                302,
+                "Merry Go Round",
+                2);
+
+        Show show2 = new Show(
+                402,
+                "Live Show",
+                3);
+                ride2.addVisitorToQueue(visitor1);
+
+        ride2.runCycle();
+        ride2.assignOperator(staff1);
+
+        ride2.addVisitorToQueue(visitor2);
+        ride2.addVisitorToQueue(visitor3);
+
+        System.out.println(
+                "Cycles before: "
+                        + ride2.getCycleCount());
+
+        ride2.runCycle();
+
+        System.out.println(
+                "Cycles after: "
+                        + ride2.getCycleCount());
+                        System.out.println();
+        ride2.displayWaitingLine();
+
+        System.out.println();
+        ride2.displayVisitHistory();
+        ride2.runCycle();
+        show2.runCycle();
+        show2.assignOperator(staff1);
+        System.out.println(
+        "Show cycles before: "
+                + show2.getCycleCount());
+
+        show2.runCycle();
+
+        System.out.println(
+                "Show cycles after: "
+                        + show2.getCycleCount());
+                        ride2.startInspection();
+
+        ride2.runCycle();
+
+        ride2.finishInspection("Passed");
+        System.out.println();
+        System.out.println("TESTING RIDE WHILE CLOSED");
+
+        ride2.addVisitorToQueue(visitor4);
+
+        ride2.startInspection();
+
+        ride2.runCycle();
+
+        ride2.finishInspection("Passed");
     }
 }

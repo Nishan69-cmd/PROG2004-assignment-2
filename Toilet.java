@@ -38,23 +38,29 @@ public class Toilet implements Inspectable {
     }
 
     @Override
-    public void inspect(String result) {
+    public void startInspection() {
 
         closed = true;
 
-        System.out.println("Toilet at "
-                + location
-                + " is closed for inspection.");
+        System.out.println(
+                "Toilet at "
+                        + location
+                        + " is closed for inspection.");
 
         System.out.println("Closed: " + closed);
+    }
+
+    @Override
+    public void finishInspection(String result) {
 
         inspectionResult = result;
 
         closed = false;
 
-        System.out.println("Toilet at "
-                + location
-                + " inspection completed.");
+        System.out.println(
+                "Toilet at "
+                        + location
+                        + " inspection completed.");
 
         System.out.println("Closed: " + closed);
     }
