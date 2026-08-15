@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 public class Park {
@@ -41,6 +42,15 @@ public class Park {
         }
 
         return attraction;
+    }
+    public ArrayList<Attraction> getAttractions() {
+
+        ArrayList<Attraction> attractionList =
+                new ArrayList<>();
+
+        attractionList.addAll(attractions.values());
+
+        return attractionList;
     }
 
     public void displayAttractionVisitorCounts() {

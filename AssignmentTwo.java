@@ -242,5 +242,14 @@ public class AssignmentTwo {
         System.out.println();
 
         park.getDistinctVisitorCount();
-    }
+        System.out.println();
+        System.out.println(
+        "Waiting visitors for Merry Go Round: "
+                + ride2.getWaitingVisitors().size());
+        System.out.println(" BACKUP AND RESTORE");
+
+        ParkIO.savePark(
+                park,
+                "park_backup.txt");
+        }
 }

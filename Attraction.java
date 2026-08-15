@@ -75,9 +75,10 @@ public abstract class Attraction {
 
         waitingLine.add(visitor);
 
-        System.out.println(visitor.getName()
-                + " joined the waiting line for "
-                + name);
+        System.out.println(
+                visitor.getName()
+                        + " joined the waiting line for "
+                        + name);
     }
 
     public Visitor removeNextVisitor() {
@@ -85,12 +86,16 @@ public abstract class Attraction {
         Visitor visitor = waitingLine.poll();
 
         if (visitor == null) {
+
             System.out.println(
                     "No visitors waiting for " + name);
+
         } else {
-            System.out.println(visitor.getName()
-                    + " removed from the waiting line for "
-                    + name);
+
+            System.out.println(
+                    visitor.getName()
+                            + " removed from the waiting line for "
+                            + name);
         }
 
         return visitor;
@@ -102,8 +107,10 @@ public abstract class Attraction {
                 "Waiting line for " + name);
 
         if (waitingLine.isEmpty()) {
+
             System.out.println(
                     "No visitors waiting.");
+
         } else {
 
             Iterator<Visitor> iterator =
@@ -111,7 +118,8 @@ public abstract class Attraction {
 
             while (iterator.hasNext()) {
 
-                Visitor visitor = iterator.next();
+                Visitor visitor =
+                        iterator.next();
 
                 System.out.println(visitor);
                 System.out.println();
@@ -127,9 +135,10 @@ public abstract class Attraction {
 
         visitHistory.add(visitor);
 
-        System.out.println(visitor.getName()
-                + " added to visit history for "
-                + name);
+        System.out.println(
+                visitor.getName()
+                        + " added to visit history for "
+                        + name);
     }
 
     public void displayVisitHistory() {
@@ -138,8 +147,10 @@ public abstract class Attraction {
                 "Visit history for " + name);
 
         if (visitHistory.isEmpty()) {
+
             System.out.println(
                     "No visitors in history.");
+
         } else {
 
             Iterator<Visitor> iterator =
@@ -147,7 +158,8 @@ public abstract class Attraction {
 
             while (iterator.hasNext()) {
 
-                Visitor visitor = iterator.next();
+                Visitor visitor =
+                        iterator.next();
 
                 System.out.println(visitor);
                 System.out.println();
@@ -158,8 +170,25 @@ public abstract class Attraction {
     public int getVisitCount() {
         return visitHistory.size();
     }
+
     public ArrayList<Visitor> getVisitHistory() {
-    return new ArrayList<>(visitHistory);
+
+        ArrayList<Visitor> historyCopy =
+                new ArrayList<>();
+
+        historyCopy.addAll(visitHistory);
+
+        return historyCopy;
+    }
+
+    public ArrayList<Visitor> getWaitingVisitors() {
+
+        ArrayList<Visitor> waitingVisitors =
+                new ArrayList<>();
+
+        waitingVisitors.addAll(waitingLine);
+
+        return waitingVisitors;
     }
 
     public boolean hasVisited(Visitor visitor) {
@@ -180,6 +209,7 @@ public abstract class Attraction {
                         + name);
 
         for (Visitor visitor : sortedHistory) {
+
             System.out.println(visitor);
             System.out.println();
         }
@@ -201,6 +231,7 @@ public abstract class Attraction {
                         + name);
 
         for (Visitor visitor : sortedHistory) {
+
             System.out.println(visitor);
             System.out.println();
         }
@@ -217,21 +248,25 @@ public abstract class Attraction {
         while (served < capacity
                 && !waitingLine.isEmpty()) {
 
-            Visitor visitor = waitingLine.poll();
+            Visitor visitor =
+                    waitingLine.poll();
 
             visitHistory.add(visitor);
 
-            System.out.println(visitor.getName()
-                    + " served by " + name);
+            System.out.println(
+                    visitor.getName()
+                            + " served by "
+                            + name);
 
             served++;
         }
 
         cycleCount++;
 
-        System.out.println(name
-                + " completed cycle "
-                + cycleCount);
+        System.out.println(
+                name
+                        + " completed cycle "
+                        + cycleCount);
     }
 
     public void assignOperator(Staff operator) {
@@ -242,8 +277,10 @@ public abstract class Attraction {
 
         this.operator = operator;
 
-        System.out.println(operator.getName()
-                + " assigned to " + name);
+        System.out.println(
+                operator.getName()
+                        + " assigned to "
+                        + name);
     }
 
     public void removeOperator() {
@@ -251,12 +288,15 @@ public abstract class Attraction {
         if (operator == null) {
 
             System.out.println(
-                    "No operator assigned to " + name);
+                    "No operator assigned to "
+                            + name);
 
         } else {
 
-            System.out.println(operator.getName()
-                    + " removed from " + name);
+            System.out.println(
+                    operator.getName()
+                            + " removed from "
+                            + name);
 
             operator = null;
         }
