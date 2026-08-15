@@ -211,5 +211,36 @@ public class AssignmentTwo {
         ride2.runCycle();
 
         ride2.finishInspection("Passed");
+
+        System.out.println();
+        System.out.println(" MANAGING THE PARK");
+
+        Park park = new Park();
+
+        park.registerAttraction(ride1);
+        park.registerAttraction(show1);
+        park.registerAttraction(ride2);
+        park.registerAttraction(show2);
+        Attraction foundAttraction =
+        park.findAttraction(301);
+
+        System.out.println(
+                "Found attraction: "
+                        + foundAttraction.getName());
+                        System.out.println();
+               
+        park.findAttraction(999);
+
+        park.displayAttractionVisitorCounts();
+        show1.recordVisit(visitor1);
+        show1.recordVisit(visitor3);
+
+        System.out.println();
+
+        park.displayAttractionVisitorCounts();
+
+        System.out.println();
+
+        park.getDistinctVisitorCount();
     }
 }

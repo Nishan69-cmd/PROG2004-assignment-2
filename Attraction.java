@@ -158,6 +158,9 @@ public abstract class Attraction {
     public int getVisitCount() {
         return visitHistory.size();
     }
+    public ArrayList<Visitor> getVisitHistory() {
+    return new ArrayList<>(visitHistory);
+    }
 
     public boolean hasVisited(Visitor visitor) {
         return visitHistory.contains(visitor);
