@@ -251,5 +251,92 @@ public class AssignmentTwo {
         ParkIO.savePark(
                 park,
                 "park_backup.txt");
+                   System.out.println();
+        System.out.println("READING BACKUP FILE");
+
+        ParkIO.readBackupFile(
+                "park_backup.txt");
+                System.out.println();
+System.out.println("RESTORING PARK");
+
+Park restoredPark =
+        ParkIO.restorePark(
+                "park_backup.txt");
+
+System.out.println(
+        "Restored attractions: "
+                + restoredPark.getAttractions().size());
+
+restoredPark.findAttraction(302);
+Attraction restoredRide =
+        restoredPark.findAttraction(302);
+
+System.out.println(
+        "Restored waiting visitors: "
+                + restoredRide
+                        .getWaitingVisitors()
+                        .size());
+                        System.out.println(
+        "Restored Merry Go Round visits: "
+                + restoredRide.getVisitCount());
+
+                                System.out.println();
+System.out.println("TESTING MISSING BACKUP FILE");
+
+Park missingFilePark =
+        ParkIO.restorePark(
+                "missing_file.txt");
+
+System.out.println(
+        "Attractions restored from missing file: "
+                + missingFilePark.getAttractions().size());
+                
+System.out.println();
+System.out.println("TESTING CORRUPT BACKUP FILE");
+
+Park corruptPark =
+        ParkIO.restorePark(
+                "corrupt_backup.txt");
+
+System.out.println(
+        "Attractions restored from corrupt file: "
+                + corruptPark.getAttractions().size());
+                System.out.println();
+System.out.println("CHECKING RESTORED PARK");
+
+System.out.println(
+        "Original attractions: "
+                + park.getAttractions().size());
+
+System.out.println(
+        "Restored attractions: "
+                + restoredPark.getAttractions().size());
+
+Attraction originalRide =
+        park.findAttraction(302);
+
+System.out.println(
+        "Original waiting visitors: "
+                + originalRide.getWaitingVisitors().size());
+
+System.out.println(
+        "Restored waiting visitors: "
+                + restoredRide.getWaitingVisitors().size());
+
+System.out.println(
+        "Original visit count: "
+                + originalRide.getVisitCount());
+
+System.out.println(
+        "Restored visit count: "
+                + restoredRide.getVisitCount());
+
+System.out.println(
+        "Original distinct visitors: "
+                + park.getDistinctVisitorCount());
+
+System.out.println(
+        "Restored distinct visitors: "
+                + restoredPark.getDistinctVisitorCount());
         }
 }
