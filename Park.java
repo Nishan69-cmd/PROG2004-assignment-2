@@ -4,11 +4,14 @@ import java.util.HashSet;
 public class Park {
 
     private HashMap<Integer, Attraction> attractions;
-
+    private int totalVisitorsServed;
     public Park() {
         attractions = new HashMap<>();
     }
-
+        public Park() {
+        attractions = new HashMap<>();
+        totalVisitorsServed = 0;
+        }
     public void registerAttraction(Attraction attraction) {
 
         if (attraction == null) {
@@ -81,5 +84,15 @@ public class Park {
 
         return distinctVisitors.size();
     }
+    public synchronized void addServedVisitors(int number) {
+
+        totalVisitorsServed =
+                totalVisitorsServed + number;
+        }
+
+        public int getTotalVisitorsServed() {
+
+        return totalVisitorsServed;
+        }
     
 }
