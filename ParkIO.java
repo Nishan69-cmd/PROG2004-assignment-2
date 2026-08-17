@@ -6,27 +6,37 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 
+/**
+ * Handles saving and restoring park information
+ * using a simple text file.
+ */
 public class ParkIO {
 
+// separator used between fields in the text file
     private static final String SEPARATOR = ",";
 
-    public static void savePark(Park park, String fileName) {
+/**
+* Saves the park state into a text file.
+*/
+    public static void savePark(
+            Park park,
+            String fileName) {
 
-        try {
-
-            BufferedWriter writer =
-                    new BufferedWriter(
-                            new FileWriter(fileName));
-
-            // Save operators
+      try (BufferedWriter writer =
+        new BufferedWriter(
+                new FileWriter(fileName))) {
+// save staff/operators
+           
             HashSet<Integer> savedStaffIDs =
                     new HashSet<>();
 
-            for (Attraction attraction : park.getAttractions()) {
+            for (Attraction attraction :
+                    park.getAttractions()) {
 
                 Staff operator =
                         attraction.getOperator();
 
+// save each staff member only once
                 if (operator != null
                         && !savedStaffIDs.contains(
                                 operator.getStaffID())) {
@@ -49,11 +59,13 @@ public class ParkIO {
                 }
             }
 
-            // Save visitors
+// save visitors
+           
             HashSet<Visitor> savedVisitors =
                     new HashSet<>();
 
-            for (Attraction attraction : park.getAttractions()) {
+            for (Attraction attraction :
+                    park.getAttractions()) {
 
                 savedVisitors.addAll(
                         attraction.getWaitingVisitors());
@@ -62,7 +74,9 @@ public class ParkIO {
                         attraction.getVisitHistory());
             }
 
-            for (Visitor visitor : savedVisitors) {
+// hashSet prevents duplicate visitor records
+            for (Visitor visitor :
+                    savedVisitors) {
 
                 writer.write(
                         "VISITOR"
@@ -78,15 +92,20 @@ public class ParkIO {
                 writer.newLine();
             }
 
-            // Save attractions
-            for (Attraction attraction : park.getAttractions()) {
+// save attractions
 
+            for (Attraction attraction :
+                    park.getAttractions()) {
+
+// 0 means there is no operator assigned
                 int operatorID = 0;
 
-                if (attraction.getOperator() != null) {
+                if (attraction.getOperator()
+                        != null) {
 
                     operatorID =
-                            attraction.getOperator()
+                            attraction
+                                    .getOperator()
                                     .getStaffID();
                 }
 
@@ -105,7 +124,8 @@ public class ParkIO {
 
                     writer.newLine();
 
-                } else if (attraction instanceof Show) {
+                } else if (attraction
+                        instanceof Show) {
 
                     writer.write(
                             "SHOW"
@@ -122,12 +142,15 @@ public class ParkIO {
                 }
             }
 
-            // Save waiting queues
-            for (Attraction attraction : park.getAttractions()) {
+// save waiting queues
+            
+            for (Attraction attraction :
+                    park.getAttractions()) {
 
                 for (Visitor visitor :
                         attraction.getWaitingVisitors()) {
 
+// save attraction ID and visitor ID
                     writer.write(
                             "QUEUE"
                                     + SEPARATOR
@@ -139,8 +162,10 @@ public class ParkIO {
                 }
             }
 
-            // Save visit histories
-            for (Attraction attraction : park.getAttractions()) {
+// save visit histories
+            
+            for (Attraction attraction :
+                    park.getAttractions()) {
 
                 for (Visitor visitor :
                         attraction.getVisitHistory()) {
@@ -156,10 +181,10 @@ public class ParkIO {
                 }
             }
 
-            writer.close();
 
             System.out.println(
-                    "Park saved to " + fileName);
+                    "Park saved to "
+                            + fileName);
 
         } catch (IOException e) {
 
@@ -168,14 +193,16 @@ public class ParkIO {
         }
     }
 
-    public static void readBackupFile(String fileName) {
+/**
+* Reads and displays the backup file.
+* This method is mainly used to test the file.
+*/
+    public static void readBackupFile(
+            String fileName) {
 
-        try {
-
-            BufferedReader reader =
-                    new BufferedReader(
-                            new FileReader(fileName));
-
+      try (BufferedReader reader =
+        new BufferedReader(
+                new FileReader(fileName))) {
             String line =
                     reader.readLine();
 
@@ -187,7 +214,6 @@ public class ParkIO {
                         reader.readLine();
             }
 
-            reader.close();
 
         } catch (IOException e) {
 
@@ -196,42 +222,53 @@ public class ParkIO {
         }
     }
 
-    public static Park restorePark(String fileName) {
+/**
+* Restores a fresh Park object from
+* a backup text file.
+*/
+    public static Park restorePark(
+            String fileName) {
 
         Park restoredPark =
                 new Park();
 
+// temporary maps allow IDs in the file
+// to be connected back to real objects
         HashMap<Integer, Staff> staff =
                 new HashMap<>();
 
         HashMap<Integer, Visitor> visitors =
                 new HashMap<>();
 
-        try {
-
-            BufferedReader reader =
-                    new BufferedReader(
-                            new FileReader(fileName));
+        try (BufferedReader reader =
+        new BufferedReader(
+                new FileReader(fileName))) {
 
             String line =
                     reader.readLine();
 
             while (line != null) {
 
+                // -1 keeps empty fields if they exist
                 String[] parts =
-                        line.split(SEPARATOR, -1);
+                        line.split(
+                                SEPARATOR,
+                                -1);
 
-                // Restore staff
+// restore staff
+                
                 if (parts[0].equals("STAFF")) {
 
                     int staffID =
-                            Integer.parseInt(parts[1]);
+                            Integer.parseInt(
+                                    parts[1]);
 
                     String name =
                             parts[2];
 
                     int age =
-                            Integer.parseInt(parts[3]);
+                            Integer.parseInt(
+                                    parts[3]);
 
                     String role =
                             parts[4];
@@ -247,17 +284,21 @@ public class ParkIO {
                             staffID,
                             restoredStaff);
 
-                // Restore visitors
-                } else if (parts[0].equals("VISITOR")) {
+// restore visitors
+               
+                } else if (parts[0]
+                        .equals("VISITOR")) {
 
                     int visitorID =
-                            Integer.parseInt(parts[1]);
+                            Integer.parseInt(
+                                    parts[1]);
 
                     String name =
                             parts[2];
 
                     int age =
-                            Integer.parseInt(parts[3]);
+                            Integer.parseInt(
+                                    parts[3]);
 
                     String ticketType =
                             parts[4];
@@ -273,20 +314,25 @@ public class ParkIO {
                             visitorID,
                             restoredVisitor);
 
-                // Restore rides
-                } else if (parts[0].equals("RIDE")) {
+// restore rides
+                
+                } else if (parts[0]
+                        .equals("RIDE")) {
 
                     int attractionID =
-                            Integer.parseInt(parts[1]);
+                            Integer.parseInt(
+                                    parts[1]);
 
                     String name =
                             parts[2];
 
                     int capacity =
-                            Integer.parseInt(parts[3]);
+                            Integer.parseInt(
+                                    parts[3]);
 
                     int operatorID =
-                            Integer.parseInt(parts[4]);
+                            Integer.parseInt(
+                                    parts[4]);
 
                     Ride restoredRide =
                             new Ride(
@@ -294,12 +340,15 @@ public class ParkIO {
                                     name,
                                     capacity);
 
+// restore operator if one existed
                     if (operatorID != 0) {
 
                         Staff operator =
-                                staff.get(operatorID);
+                                staff.get(
+                                        operatorID);
 
                         if (operator == null) {
+
                             throw new IllegalArgumentException(
                                     "Operator not found.");
                         }
@@ -311,20 +360,25 @@ public class ParkIO {
                     restoredPark.registerAttraction(
                             restoredRide);
 
-                // Restore shows
-                } else if (parts[0].equals("SHOW")) {
+// testore shows
+                
+                } else if (parts[0]
+                        .equals("SHOW")) {
 
                     int attractionID =
-                            Integer.parseInt(parts[1]);
+                            Integer.parseInt(
+                                    parts[1]);
 
                     String name =
                             parts[2];
 
                     int capacity =
-                            Integer.parseInt(parts[3]);
+                            Integer.parseInt(
+                                    parts[3]);
 
                     int operatorID =
-                            Integer.parseInt(parts[4]);
+                            Integer.parseInt(
+                                    parts[4]);
 
                     Show restoredShow =
                             new Show(
@@ -335,9 +389,11 @@ public class ParkIO {
                     if (operatorID != 0) {
 
                         Staff operator =
-                                staff.get(operatorID);
+                                staff.get(
+                                        operatorID);
 
                         if (operator == null) {
+
                             throw new IllegalArgumentException(
                                     "Operator not found.");
                         }
@@ -349,21 +405,26 @@ public class ParkIO {
                     restoredPark.registerAttraction(
                             restoredShow);
 
-                // Restore waiting queues
-                } else if (parts[0].equals("QUEUE")) {
+// restore waiting queues
+                
+                } else if (parts[0]
+                        .equals("QUEUE")) {
 
                     int attractionID =
-                            Integer.parseInt(parts[1]);
+                            Integer.parseInt(
+                                    parts[1]);
 
                     int visitorID =
-                            Integer.parseInt(parts[2]);
+                            Integer.parseInt(
+                                    parts[2]);
 
                     Attraction attraction =
                             restoredPark.findAttraction(
                                     attractionID);
 
                     Visitor visitor =
-                            visitors.get(visitorID);
+                            visitors.get(
+                                    visitorID);
 
                     if (attraction == null
                             || visitor == null) {
@@ -375,21 +436,26 @@ public class ParkIO {
                     attraction.addVisitorToQueue(
                             visitor);
 
-                // Restore visit histories
-                } else if (parts[0].equals("HISTORY")) {
+// restore visit histories
+
+                } else if (parts[0]
+                        .equals("HISTORY")) {
 
                     int attractionID =
-                            Integer.parseInt(parts[1]);
+                            Integer.parseInt(
+                                    parts[1]);
 
                     int visitorID =
-                            Integer.parseInt(parts[2]);
+                            Integer.parseInt(
+                                    parts[2]);
 
                     Attraction attraction =
                             restoredPark.findAttraction(
                                     attractionID);
 
                     Visitor visitor =
-                            visitors.get(visitorID);
+                            visitors.get(
+                                    visitorID);
 
                     if (attraction == null
                             || visitor == null) {
@@ -403,6 +469,7 @@ public class ParkIO {
 
                 } else {
 
+// unknown record means the file is invalid
                     throw new IllegalArgumentException(
                             "Unknown record in backup file.");
                 }
@@ -410,25 +477,26 @@ public class ParkIO {
                 line =
                         reader.readLine();
             }
-
-            reader.close();
-
+            
             System.out.println(
                     "Park restored from "
                             + fileName);
 
         } catch (IOException e) {
 
+// handles missing or unreadable file
             System.out.println(
                     "Error restoring park.");
 
         } catch (IllegalArgumentException e) {
 
+// handles invalid values such as ABC instead of ID
             System.out.println(
                     "Invalid data in backup file.");
 
         } catch (ArrayIndexOutOfBoundsException e) {
 
+// handles records with missing fields
             System.out.println(
                     "Corrupt backup file.");
         }

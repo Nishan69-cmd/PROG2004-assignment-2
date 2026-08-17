@@ -3,8 +3,12 @@ import java.util.Collections;
 
 public class AssignmentTwo {
 
-   public static void main(String[] args)
-        throws InterruptedException {
+    public static void main(String[] args)
+            throws InterruptedException {
+
+// Part 1 - modelling the park's people
+
+        System.out.println("PART 1 - PARK PEOPLE");
 
         Visitor visitor1 =
                 new Visitor(201, "Sam", 25, "Adult");
@@ -18,12 +22,21 @@ public class AssignmentTwo {
         Visitor visitor4 =
                 new Visitor(204, "Sam", 22, "VIP");
 
-        ArrayList<Visitor> visitors = new ArrayList<>();
+        Staff staff1 =
+                new Staff(
+                        101,
+                        "John Smith",
+                        30,
+                        "Ride Operator");
+
+        ArrayList<Visitor> visitors =
+                new ArrayList<>();
 
         visitors.add(visitor1);
         visitors.add(visitor2);
         visitors.add(visitor3);
 
+        System.out.println();
         System.out.println("VISITORS BEFORE SORTING");
 
         for (Visitor visitor : visitors) {
@@ -40,29 +53,66 @@ public class AssignmentTwo {
             System.out.println();
         }
 
+        System.out.println("STAFF");
+        System.out.println(staff1);
+        System.out.println("STAFF");
+        System.out.println(staff1);
 
         System.out.println();
-        System.out.println("ATTRACTIONS");
+        System.out.println("TESTING EQUALITY BY ID");
 
-        Staff staff1 = new Staff(
-                101,
-                "John Smith",
-                30,
-                "Ride Operator");
+        Visitor sameVisitor =
+                new Visitor(
+                        201,
+                        "Different Name",
+                        40,
+                        "VIP");
 
-        Ride ride1 = new Ride(
-                301,
-                "Roller Coaster",
-                2);
-        Show show1 = new Show(
-                401,
-                "Magic Show",
-                3);
+        Staff sameStaff =
+                new Staff(
+                        101,
+                        "Different Staff",
+                        45,
+                        "Manager");
+
+        System.out.println(
+                "Visitors with same ID are equal: "
+                        + visitor1.equals(sameVisitor));
+
+        System.out.println(
+                "Staff with same ID are equal: "
+                        + staff1.equals(sameStaff));
+                        
+// Part 2 - modelling the park's attractions
+
+
+        System.out.println();
+        System.out.println("PART 2 - ATTRACTIONS");
+
+        Ride ride1 =
+                new Ride(
+                        301,
+                        "Roller Coaster",
+                        2);
+
+        Show show1 =
+                new Show(
+                        401,
+                        "Magic Show",
+                        3);
+
         Toilet toilet1 =
-                new Toilet(501, "Food Court");
+                new Toilet(
+                        501,
+                        "Food Court");
 
-        System.out.println(ride1.getAttractionID());
-        System.out.println(ride1.getName());
+        System.out.println(
+                "Ride ID: "
+                        + ride1.getAttractionID());
+
+        System.out.println(
+                "Ride name: "
+                        + ride1.getName());
 
         ride1.assignOperator(staff1);
         ride1.removeOperator();
@@ -70,21 +120,26 @@ public class AssignmentTwo {
         show1.assignOperator(staff1);
         show1.removeOperator();
 
-        staff1.performInspection(ride1, "Passed");
+        staff1.performInspection(
+                ride1,
+                "Passed");
 
         System.out.println(
                 "Ride result: "
                         + ride1.getInspectionResult());
 
-        staff1.performInspection(toilet1, "Clean");
+        staff1.performInspection(
+                toilet1,
+                "Clean");
 
         System.out.println(
                 "Toilet result: "
                         + toilet1.getInspectionResult());
 
+// Part 3 - Waiting line
 
         System.out.println();
-        System.out.println(" WAITING LINE");
+        System.out.println("PART 3 - WAITING LINE");
 
         ride1.addVisitorToQueue(visitor1);
         ride1.addVisitorToQueue(visitor2);
@@ -114,10 +169,14 @@ public class AssignmentTwo {
         ride1.displayWaitingLine();
 
         System.out.println();
+
+// test removing from an empty queue
         ride1.removeNextVisitor();
 
+// Part 4 - visit history
+
         System.out.println();
-        System.out.println("VISIT HISTORY");
+        System.out.println("PART 4 - VISIT HISTORY");
 
         ride1.recordVisit(visitor1);
         ride1.recordVisit(visitor2);
@@ -144,27 +203,34 @@ public class AssignmentTwo {
 
         System.out.println();
         ride1.displayHistoryByNameAndTicket();
-        System.out.println("Ride capacity: "
-        + ride1.getCapacity());
 
-        System.out.println("Ride cycles: "
-                + ride1.getCycleCount());
-
+// Part 5 - operating attractions
+       
         System.out.println();
-        System.out.println("OPERATING ATTRACTIONS");
+        System.out.println(
+                "PART 5 - OPERATING ATTRACTIONS");
 
-        Ride ride2 = new Ride(
-                302,
-                "Merry Go Round",
-                2);
+        Ride ride2 =
+                new Ride(
+                        302,
+                        "Merry Go Round",
+                        2);
 
-        Show show2 = new Show(
-                402,
-                "Live Show",
-                3);
-                ride2.addVisitorToQueue(visitor1);
+        Show show2 =
+                new Show(
+                        402,
+                        "Live Show",
+                        3);
 
+        System.out.println(
+                "Ride capacity: "
+                        + ride2.getCapacity());
+
+        ride2.addVisitorToQueue(visitor1);
+
+// test ride without operator
         ride2.runCycle();
+
         ride2.assignOperator(staff1);
 
         ride2.addVisitorToQueue(visitor2);
@@ -179,30 +245,35 @@ public class AssignmentTwo {
         System.out.println(
                 "Cycles after: "
                         + ride2.getCycleCount());
-                        System.out.println();
+
+        System.out.println();
         ride2.displayWaitingLine();
 
         System.out.println();
         ride2.displayVisitHistory();
-        ride2.runCycle();
-        show2.runCycle();
-        show2.assignOperator(staff1);
-        System.out.println(
-        "Show cycles before: "
-                + show2.getCycleCount());
 
+// serve remaining visitor
+        ride2.runCycle();
+
+// show cannot run without operator
+        show2.runCycle();
+
+        show2.assignOperator(staff1);
+
+        System.out.println(
+                "Show cycles before: "
+                        + show2.getCycleCount());
+
+// show is allowed to run with an empty queue
         show2.runCycle();
 
         System.out.println(
                 "Show cycles after: "
                         + show2.getCycleCount());
-                        ride2.startInspection();
 
-        ride2.runCycle();
-
-        ride2.finishInspection("Passed");
         System.out.println();
-        System.out.println("TESTING RIDE WHILE CLOSED");
+        System.out.println(
+                "TESTING RIDE WHILE CLOSED");
 
         ride2.addVisitorToQueue(visitor4);
 
@@ -212,26 +283,38 @@ public class AssignmentTwo {
 
         ride2.finishInspection("Passed");
 
-        System.out.println();
-        System.out.println(" MANAGING THE PARK");
+// Part 6 - managing the park
 
-        Park park = new Park();
+        System.out.println();
+        System.out.println(
+                "PART 6 - MANAGING THE PARK");
+
+        Park park =
+                new Park();
 
         park.registerAttraction(ride1);
         park.registerAttraction(show1);
         park.registerAttraction(ride2);
         park.registerAttraction(show2);
+
+        System.out.println();
+
         Attraction foundAttraction =
-        park.findAttraction(301);
+                park.findAttraction(301);
 
         System.out.println(
                 "Found attraction: "
                         + foundAttraction.getName());
-                        System.out.println();
-               
+
+        System.out.println();
+
+// test an attraction that does not exist
         park.findAttraction(999);
 
+        System.out.println();
+
         park.displayAttractionVisitorCounts();
+
         show1.recordVisit(visitor1);
         show1.recordVisit(visitor3);
 
@@ -242,22 +325,33 @@ public class AssignmentTwo {
         System.out.println();
 
         park.getDistinctVisitorCount();
+
+        System.out.println(
+                "Waiting visitors for Merry Go Round: "
+                        + ride2
+                                .getWaitingVisitors()
+                                .size());
+
+// Part 7 - backup and restore
+
         System.out.println();
         System.out.println(
-        "Waiting visitors for Merry Go Round: "
-                + ride2.getWaitingVisitors().size());
-        System.out.println(" BACKUP AND RESTORE");
+                "PART 7 - BACKUP AND RESTORE");
 
         ParkIO.savePark(
                 park,
                 "park_backup.txt");
-                   System.out.println();
-        System.out.println("READING BACKUP FILE");
+
+        System.out.println();
+        System.out.println(
+                "READING BACKUP FILE");
 
         ParkIO.readBackupFile(
                 "park_backup.txt");
-                System.out.println();
-        System.out.println("RESTORING PARK");
+
+        System.out.println();
+        System.out.println(
+                "RESTORING PARK");
 
         Park restoredPark =
                 ParkIO.restorePark(
@@ -265,9 +359,10 @@ public class AssignmentTwo {
 
         System.out.println(
                 "Restored attractions: "
-                        + restoredPark.getAttractions().size());
+                        + restoredPark
+                                .getAttractions()
+                                .size());
 
-        restoredPark.findAttraction(302);
         Attraction restoredRide =
                 restoredPark.findAttraction(302);
 
@@ -276,12 +371,18 @@ public class AssignmentTwo {
                         + restoredRide
                                 .getWaitingVisitors()
                                 .size());
-                                System.out.println(
-                "Restored Merry Go Round visits: "
-                        + restoredRide.getVisitCount());
 
-                                        System.out.println();
-        System.out.println("TESTING MISSING BACKUP FILE");
+        System.out.println(
+                "Restored Merry Go Round visits: "
+                        + restoredRide
+                                .getVisitCount());
+
+
+// test missing backup file
+
+        System.out.println();
+        System.out.println(
+                "TESTING MISSING BACKUP FILE");
 
         Park missingFilePark =
                 ParkIO.restorePark(
@@ -289,10 +390,16 @@ public class AssignmentTwo {
 
         System.out.println(
                 "Attractions restored from missing file: "
-                        + missingFilePark.getAttractions().size());
-                        
+                        + missingFilePark
+                                .getAttractions()
+                                .size());
+
+
+// test corrupt backup file
+
         System.out.println();
-        System.out.println("TESTING CORRUPT BACKUP FILE");
+        System.out.println(
+                "TESTING CORRUPT BACKUP FILE");
 
         Park corruptPark =
                 ParkIO.restorePark(
@@ -300,48 +407,72 @@ public class AssignmentTwo {
 
         System.out.println(
                 "Attractions restored from corrupt file: "
-                        + corruptPark.getAttractions().size());
-                        System.out.println();
-        System.out.println("CHECKING RESTORED PARK");
+                        + corruptPark
+                                .getAttractions()
+                                .size());
+
+
+// compare original and restored park
+
+        System.out.println();
+        System.out.println(
+                "CHECKING RESTORED PARK");
 
         System.out.println(
                 "Original attractions: "
-                        + park.getAttractions().size());
+                        + park
+                                .getAttractions()
+                                .size());
 
         System.out.println(
                 "Restored attractions: "
-                        + restoredPark.getAttractions().size());
+                        + restoredPark
+                                .getAttractions()
+                                .size());
 
         Attraction originalRide =
                 park.findAttraction(302);
 
         System.out.println(
                 "Original waiting visitors: "
-                        + originalRide.getWaitingVisitors().size());
+                        + originalRide
+                                .getWaitingVisitors()
+                                .size());
 
         System.out.println(
                 "Restored waiting visitors: "
-                        + restoredRide.getWaitingVisitors().size());
+                        + restoredRide
+                                .getWaitingVisitors()
+                                .size());
 
         System.out.println(
                 "Original visit count: "
-                        + originalRide.getVisitCount());
+                        + originalRide
+                                .getVisitCount());
 
         System.out.println(
                 "Restored visit count: "
-                        + restoredRide.getVisitCount());
+                        + restoredRide
+                                .getVisitCount());
 
         System.out.println(
                 "Original distinct visitors: "
-                        + park.getDistinctVisitorCount());
+                        + park
+                                .getDistinctVisitorCount());
 
         System.out.println(
                 "Restored distinct visitors: "
-                        + restoredPark.getDistinctVisitorCount());
-                        System.out.println();
-        System.out.println("CONCURRENCY");
+                        + restoredPark
+                                .getDistinctVisitorCount());
 
-        Park concurrentPark = new Park();
+// Part 8 - concurrency
+
+        System.out.println();
+        System.out.println(
+                "PART 8 - CONCURRENCY");
+
+        Park concurrentPark =
+                new Park();
 
         Ride concurrentRide =
                 new Ride(
@@ -410,5 +541,5 @@ public class AssignmentTwo {
                 "Total visitors served concurrently: "
                         + concurrentPark
                                 .getTotalVisitorsServed());
-        }
+    }
 }

@@ -5,23 +5,40 @@ import java.util.LinkedList;
 import java.util.Objects;
 import java.util.Queue;
 
+/**
+ * Abstract parent class for park attractions.
+ * Ride and Show inherit from this class.
+ */
 public abstract class Attraction {
 
     private int attractionID;
     private String name;
     private Staff operator;
+
+// FIFO waiting line
     private Queue<Visitor> waitingLine;
+
+// Stores visitors who have already been served
     private ArrayList<Visitor> visitHistory;
+
     private int capacity;
     private int cycleCount;
 
-    public Attraction(int attractionID, String name, int capacity) {
+/**
+* Creates a new attraction.
+ */
+    public Attraction(
+            int attractionID,
+            String name,
+            int capacity) {
 
+// Validate attraction ID
         if (attractionID <= 0) {
             throw new IllegalArgumentException(
                     "Attraction ID must be greater than 0");
         }
 
+// Validate attraction name
         Objects.requireNonNull(
                 name,
                 "Name must not be null");
@@ -31,6 +48,7 @@ public abstract class Attraction {
                     "Name must not be blank");
         }
 
+// validate capacity
         if (capacity <= 0) {
             throw new IllegalArgumentException(
                     "Capacity must be greater than 0");
@@ -39,12 +57,19 @@ public abstract class Attraction {
         this.attractionID = attractionID;
         this.name = name;
         this.operator = null;
-        this.waitingLine = new LinkedList<>();
-        this.visitHistory = new ArrayList<>();
+
+// LinkelList is used as a FIFO Queue
+        this.waitingLine =
+                new LinkedList<>();
+
+        this.visitHistory =
+                new ArrayList<>();
+
         this.capacity = capacity;
         this.cycleCount = 0;
     }
 
+// Getter methods
     public int getAttractionID() {
         return attractionID;
     }
@@ -65,9 +90,17 @@ public abstract class Attraction {
         return cycleCount;
     }
 
+/**
+* Each subclass provides its own rules
+* for running an attraction cycle.
+*/
     public abstract void runCycle();
 
-    public void addVisitorToQueue(Visitor visitor) {
+ /**
+ * Adds a visitor to the end of the waiting line.
+ */
+    public void addVisitorToQueue(
+            Visitor visitor) {
 
         Objects.requireNonNull(
                 visitor,
@@ -81,14 +114,20 @@ public abstract class Attraction {
                         + name);
     }
 
+/**
+* Removes the visitor who has waited longest.
+*/
     public Visitor removeNextVisitor() {
 
-        Visitor visitor = waitingLine.poll();
+// poll() removes the first visitor in FIFO order
+        Visitor visitor =
+                waitingLine.poll();
 
         if (visitor == null) {
 
             System.out.println(
-                    "No visitors waiting for " + name);
+                    "No visitors waiting for "
+                            + name);
 
         } else {
 
@@ -101,6 +140,9 @@ public abstract class Attraction {
         return visitor;
     }
 
+/**
+ * Displays all visitors currently waiting.
+ */
     public void displayWaitingLine() {
 
         System.out.println(
@@ -113,6 +155,7 @@ public abstract class Attraction {
 
         } else {
 
+// iterator is used to move through the queue
             Iterator<Visitor> iterator =
                     waitingLine.iterator();
 
@@ -127,7 +170,11 @@ public abstract class Attraction {
         }
     }
 
-    public void recordVisit(Visitor visitor) {
+ /**
+ * Adds a visitor to the visit history.
+ */
+    public void recordVisit(
+            Visitor visitor) {
 
         Objects.requireNonNull(
                 visitor,
@@ -141,6 +188,9 @@ public abstract class Attraction {
                         + name);
     }
 
+ /**
+ * Displays every visit recorded for this attraction.
+ */
     public void displayVisitHistory() {
 
         System.out.println(
@@ -167,60 +217,92 @@ public abstract class Attraction {
         }
     }
 
+/**
+ * Returns the total number of recorded visits.
+ */
     public int getVisitCount() {
         return visitHistory.size();
     }
 
+/**
+ * Returns a copy of the visit history.
+ * This prevents other classes from directly
+* changing the original list.
+ */
     public ArrayList<Visitor> getVisitHistory() {
 
         ArrayList<Visitor> historyCopy =
                 new ArrayList<>();
 
-        historyCopy.addAll(visitHistory);
+        historyCopy.addAll(
+                visitHistory);
 
         return historyCopy;
     }
 
+/**
+ * Returns a copy of the current waiting line.
+*/
     public ArrayList<Visitor> getWaitingVisitors() {
 
         ArrayList<Visitor> waitingVisitors =
                 new ArrayList<>();
 
-        waitingVisitors.addAll(waitingLine);
+        waitingVisitors.addAll(
+                waitingLine);
 
         return waitingVisitors;
     }
 
-    public boolean hasVisited(Visitor visitor) {
-        return visitHistory.contains(visitor);
+/**
+ * Checks whether a visitor appears in
+ * the visit history.
+*/
+    public boolean hasVisited(
+            Visitor visitor) {
+
+        return visitHistory.contains(
+                visitor);
     }
 
+/**
+* Displays visit history using Visitor's
+* natural ordering by age.
+*/
     public void displayHistoryByAge() {
 
         ArrayList<Visitor> sortedHistory =
                 new ArrayList<>();
 
-        sortedHistory.addAll(visitHistory);
+        sortedHistory.addAll(
+                visitHistory);
 
-        Collections.sort(sortedHistory);
+        Collections.sort(
+                sortedHistory);
 
         System.out.println(
                 "Visit history sorted by age for "
                         + name);
 
-        for (Visitor visitor : sortedHistory) {
+        for (Visitor visitor :
+                sortedHistory) {
 
             System.out.println(visitor);
             System.out.println();
         }
     }
 
+/**
+ * Displays history sorted by visitor name
+ * and ticket type.
+ */
     public void displayHistoryByNameAndTicket() {
 
         ArrayList<Visitor> sortedHistory =
                 new ArrayList<>();
 
-        sortedHistory.addAll(visitHistory);
+        sortedHistory.addAll(
+                visitHistory);
 
         Collections.sort(
                 sortedHistory,
@@ -230,17 +312,27 @@ public abstract class Attraction {
                 "Visit history sorted by name and ticket type for "
                         + name);
 
-        for (Visitor visitor : sortedHistory) {
+        for (Visitor visitor :
+                sortedHistory) {
 
             System.out.println(visitor);
             System.out.println();
         }
     }
 
+/**
+ * Used by Ride to check whether someone
+ * is waiting.
+*/
     protected boolean hasWaitingVisitors() {
         return !waitingLine.isEmpty();
     }
 
+/**
+ * Serves up to the attraction capacity.
+ * Served visitors move from the queue
+ * into the visit history.
+ */
     protected void serveVisitors() {
 
         int served = 0;
@@ -251,7 +343,8 @@ public abstract class Attraction {
             Visitor visitor =
                     waitingLine.poll();
 
-            visitHistory.add(visitor);
+            visitHistory.add(
+                    visitor);
 
             System.out.println(
                     visitor.getName()
@@ -261,6 +354,7 @@ public abstract class Attraction {
             served++;
         }
 
+// one completed operation counts as one cycle
         cycleCount++;
 
         System.out.println(
@@ -269,7 +363,11 @@ public abstract class Attraction {
                         + cycleCount);
     }
 
-    public void assignOperator(Staff operator) {
+/**
+ * Assigns a staff member as the operator.
+*/
+    public void assignOperator(
+            Staff operator) {
 
         Objects.requireNonNull(
                 operator,
@@ -283,6 +381,9 @@ public abstract class Attraction {
                         + name);
     }
 
+/**
+ * Removes the current attraction operator.
+*/
     public void removeOperator() {
 
         if (operator == null) {
